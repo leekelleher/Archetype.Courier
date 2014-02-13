@@ -4,7 +4,7 @@ Enables Courier to resolve the configuration and property data of the Archetype 
 
 ## Usage
 
-Install and forgot.
+Install and forget! :smiley_cat:
 
 ## Links
 
