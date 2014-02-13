@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<umbPackage>
+	<info>
+		<package>
+			<name>Archetype.Courier</name>
+			<version>1.0.0-beta</version>
+			<license url="http://opensource.org/licenses/MIT">The MIT License (MIT)</license>
+			<url>http://our.umbraco.org/projects/developer-tools/</url>
+			<requirements>
+				<major>7</major>
+				<minor>0</minor>
+				<patch>0</patch>
+			</requirements>
+		</package>
+		<author>
+			<name>Lee Kelleher</name>
+			<website>http://leekelleher.com/</website>
+		</author>
+		<readme><![CDATA[Courier DataResolver for Archetype
+
+This package enables Courier to resolve the configuration and property data of the Archetype property-editor for Umbraco 7+.
+
+Once you have installed this package, you can forget all about it, there is no additional configuration required.
+]]></readme>
+	</info>
+	<DocumentTypes />
+	<Templates />
+	<Stylesheets />
+	<Macros />
+	<DictionaryItems />
+	<Languages />
+	<DataTypes />
+	<Actions />
+	<control />
+	<files><file><guid>a0288c2f-faa0-4528-98d1-ade40d828bb7.dll</guid><orgPath>/bin</orgPath><orgName>Archetype.Courier.dll</orgName></file><file><guid>9fda63a2-0c18-4b8a-97af-6acdc1d44de5.pdb</guid><orgPath>/bin</orgPath><orgName>Archetype.Courier.pdb</orgName></file></files>
+</umbPackage>
