@@ -87,7 +87,7 @@ namespace Archetype.Courier.DataResolvers
 
 		private void ReplacePropertyDataIds(Item item, ContentProperty propertyData, Direction direction)
 		{
-			if (propertyData.Value != null)
+			if (propertyData != null && propertyData.Value != null)
 			{
 				// just look at the amount of dancing around we have to do in order to fake a `PublishedPropertyType`?!
 				var dataTypeId = PersistenceManager.Default.GetNodeId(propertyData.DataType, NodeObjectTypes.DataType);
@@ -128,11 +128,20 @@ namespace Archetype.Courier.DataResolvers
 							// pass up the dependencies and resources
 							item.Dependencies.AddRange(fakeItem.Dependencies);
 							item.Resources.AddRange(fakeItem.Resources);
+
+							// add a dependency for the property's data-type
+							property.DataTypeGuid = fakeItem.Data.FirstOrDefault().DataType.ToString();
+							item.Dependencies.Add(property.DataTypeGuid, ProviderIDCollection.dataTypeItemProviderGuid);
 						}
 						else if (direction == Direction.Extracting)
 						{
 							// run the 'fake' item through Courier's data resolvers
 							ResolutionManager.Instance.ExtractingItem(fakeItem, fakeItemProvider);
+
+							// resolve the property's data-type Id
+							int identifier;
+							if (int.TryParse(Dependencies.ConvertIdentifier(property.DataTypeGuid, IdentifierReplaceDirection.FromGuidToNodeId), out identifier))
+								property.DataTypeId = dataTypeId;
 						}
 
 						// set the resolved property data value
