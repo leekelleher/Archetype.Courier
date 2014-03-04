@@ -1,6 +1,6 @@
 # Courier DataResolver for Archetype
 
-Enables Courier to resolve the configuration and property data of the Archetype property-editor for Umbraco 7+.
+Enables Courier to resolve the configuration and property data of the Archetype property-editor for Umbraco 7+ (and [Umbraco as a Service](http://www.umbraco.io)).
 
 ## Usage
 
