@@ -30,7 +30,7 @@ namespace Archetype.Courier.DataResolvers
 
 		public override void ExtractingDataType(DataType item)
 		{
-			ReplaceDataTypeIds(item, Direction.Extracting);
+			// No longer need to extract the DataType (int) Ids as they now reference the Guid [LK]
 		}
 
 		public override void ExtractingProperty(Item item, ContentProperty propertyData)
@@ -40,7 +40,7 @@ namespace Archetype.Courier.DataResolvers
 
 		public override void PackagingDataType(DataType item)
 		{
-			ReplaceDataTypeIds(item, Direction.Packaging);
+			AddDataTypeDependencies(item);
 		}
 
 		public override void PackagingProperty(Item item, ContentProperty propertyData)
@@ -48,7 +48,7 @@ namespace Archetype.Courier.DataResolvers
 			ReplacePropertyDataIds(item, propertyData, Direction.Packaging);
 		}
 
-		private void ReplaceDataTypeIds(DataType item, Direction direction)
+		private void AddDataTypeDependencies(DataType item)
 		{
 			if (item.Prevalues != null && item.Prevalues.Count > 0)
 			{
@@ -61,22 +61,7 @@ namespace Archetype.Courier.DataResolvers
 					{
 						foreach (var property in config.Fieldsets.SelectMany(x => x.Properties))
 						{
-							if (direction == Direction.Packaging)
-							{
-								var dataTypeGuid = Dependencies.ConvertIdentifier(property.DataTypeId.ToString(), IdentifierReplaceDirection.FromNodeIdToGuid);
-
-								item.Dependencies.Add(dataTypeGuid, ProviderIDCollection.dataTypeItemProviderGuid);
-
-								property.DataTypeGuid = dataTypeGuid;
-							}
-							else if (direction == Direction.Extracting)
-							{
-								var identifier = Dependencies.ConvertIdentifier(property.DataTypeGuid, IdentifierReplaceDirection.FromGuidToNodeId);
-
-								int dataTypeId;
-								if (int.TryParse(identifier, out dataTypeId))
-									property.DataTypeId = dataTypeId;
-							}
+							item.Dependencies.Add(property.DataTypeGuid.ToString(), ProviderIDCollection.dataTypeItemProviderGuid);
 						}
 
 						item.Prevalues[0].Value = JsonConvert.SerializeObject(config, Formatting.Indented);
