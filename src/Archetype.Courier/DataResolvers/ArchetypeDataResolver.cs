@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Umbraco.Core;
+using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Courier.Core;
@@ -88,6 +90,9 @@ namespace Archetype.Courier.DataResolvers
 
 					foreach (var property in archetype.Fieldsets.SelectMany(x => x.Properties))
 					{
+						if (property == null || string.IsNullOrWhiteSpace(property.PropertyEditorAlias))
+							continue;
+
 						// create a 'fake' item for Courier to process
 						var fakeItem = new ContentPropertyData()
 						{
@@ -107,8 +112,15 @@ namespace Archetype.Courier.DataResolvers
 
 						if (direction == Direction.Packaging)
 						{
-							// run the 'fake' item through Courier's data resolvers
-							ResolutionManager.Instance.PackagingItem(fakeItem, fakeItemProvider);
+							try
+							{
+								// run the 'fake' item through Courier's data resolvers
+								ResolutionManager.Instance.PackagingItem(fakeItem, fakeItemProvider);
+							}
+							catch (Exception ex)
+							{
+								LogHelper.Error<ArchetypeDataResolver>(string.Concat("Error resolving data value: ", fakeItem.Name), ex);
+							}
 
 							// pass up the dependencies and resources
 							item.Dependencies.AddRange(fakeItem.Dependencies);
