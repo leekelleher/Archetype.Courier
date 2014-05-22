@@ -26,7 +26,7 @@ namespace Archetype.Courier.DataResolvers
 		{
 			get
 			{
-				return Archetype.Umbraco.Constants.PropertyEditorAlias;
+				return Archetype.Constants.PropertyEditorAlias;
 			}
 		}
 
@@ -55,9 +55,9 @@ namespace Archetype.Courier.DataResolvers
 			if (item.Prevalues != null && item.Prevalues.Count > 0)
 			{
 				var prevalue = item.Prevalues[0];
-				if (prevalue.Alias.InvariantEquals(Archetype.Umbraco.Constants.PreValueAlias) && !string.IsNullOrWhiteSpace(prevalue.Value))
+				if (prevalue.Alias.InvariantEquals(Archetype.Constants.PreValueAlias) && !string.IsNullOrWhiteSpace(prevalue.Value))
 				{
-					var config = JsonConvert.DeserializeObject<Archetype.Umbraco.Models.ArchetypePreValue>(prevalue.Value);
+					var config = JsonConvert.DeserializeObject<Archetype.Models.ArchetypePreValue>(prevalue.Value);
 
 					if (config != null && config.Fieldsets != null)
 					{
@@ -80,8 +80,8 @@ namespace Archetype.Courier.DataResolvers
 				var dataTypeId = PersistenceManager.Default.GetNodeId(propertyData.DataType, NodeObjectTypes.DataType);
 				var fakePropertyType = this.CreateFakePropertyType(dataTypeId, this.EditorAlias);
 
-				var converter = new Archetype.Umbraco.PropertyConverters.ArchetypeValueConverter();
-				var archetype = (Archetype.Umbraco.Models.Archetype)converter.ConvertDataToSource(fakePropertyType, propertyData.Value, false);
+				var converter = new Archetype.PropertyConverters.ArchetypeValueConverter();
+				var archetype = (Archetype.Models.ArchetypeModel)converter.ConvertDataToSource(fakePropertyType, propertyData.Value, false);
 
 				if (archetype != null)
 				{
