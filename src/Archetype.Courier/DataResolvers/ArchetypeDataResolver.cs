@@ -126,9 +126,16 @@ namespace Archetype.Courier.DataResolvers
 							item.Dependencies.AddRange(fakeItem.Dependencies);
 							item.Resources.AddRange(fakeItem.Resources);
 
-							// add a dependency for the property's data-type
-							property.DataTypeGuid = fakeItem.Data.FirstOrDefault().DataType.ToString();
-							item.Dependencies.Add(property.DataTypeGuid, ProviderIDCollection.dataTypeItemProviderGuid);
+							if (fakeItem.Data != null && fakeItem.Data.Any())
+							{
+								var firstDataType = fakeItem.Data.FirstOrDefault();
+								if (firstDataType != null)
+								{
+									// add a dependency for the property's data-type
+									property.DataTypeGuid = firstDataType.ToString();
+									item.Dependencies.Add(property.DataTypeGuid, ProviderIDCollection.dataTypeItemProviderGuid);
+								}
+							}
 						}
 						else if (direction == Direction.Extracting)
 						{
@@ -141,8 +148,15 @@ namespace Archetype.Courier.DataResolvers
 								property.DataTypeId = dataTypeId;
 						}
 
-						// set the resolved property data value
-						property.Value = fakeItem.Data.FirstOrDefault().Value;
+						if (fakeItem.Data != null && fakeItem.Data.Any())
+						{
+							var firstDataType = fakeItem.Data.FirstOrDefault();
+							if (firstDataType != null)
+							{
+								// set the resolved property data value
+								property.Value = firstDataType.Value;
+							}
+						}
 					}
 
 					if (item.Name.Contains(string.Concat(this.EditorAlias, ": Nested")))
