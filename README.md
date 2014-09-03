@@ -1,13 +1,9 @@
 # Courier DataResolver for Archetype
 
-Enables Courier to resolve the configuration and property data of the Archetype property-editor for Umbraco 7+ (and [Umbraco as a Service](http://www.umbraco.io)).
+This project has been relocated to the main [Archetype][1] project repository.
 
-## Usage
+The source-code for the current tip of this repository has been removed, so not to cause confusion with the latest [Archetype][1] code.
 
-Install and forget! :smiley_cat:
+Please update any references for this Courier resolver to the main [Archetype][1] project.
 
-## Links
-
-* Archetype: https://github.com/imulus/Archetype
-* Source: https://github.com/leekelleher/Archetype.Courier
-* Twitter: [@leekelleher](https://twitter.com/leekelleher)
+[1]: https://github.com/imulus/Archetype
